@@ -3,9 +3,6 @@ import TodoItem from "./TodoItem";
 
 const TodosList = (props) => {
     const toggleTodoCompleted = (id) => {
-        const todo = props.todosList.find(item => item.id === id);
-        console.log(todo);
-        todo.completed = !todo.completed;
     }
 
     return (

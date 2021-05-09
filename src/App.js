@@ -30,7 +30,7 @@ function App() {
 
   const addTodo = (title) => {
     setTodosList(prevList => {
-      return [...prevList, { id: Math.random().toString(), title: title, completed: false }];
+      return [...prevList, { id: Math.random().toString(36).substr(2, 9), title: title, completed: false }];
     });
   }
 
