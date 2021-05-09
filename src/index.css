@@ -67,6 +67,7 @@ button {
 button {
   display: flex;
   user-select: none;
+  cursor: pointer;
 }
 
 input:focus,
