@@ -2,19 +2,19 @@ import { useEffect, useState } from 'react';
 import TodoContext from './todo-context'
 
 const TodoProvider = (props) => {
-    const [todosList, setTodosList] = useState([]);
+    const existingList = JSON.parse(localStorage.getItem('todos'));
+    const [todosList, setTodosList] = useState(existingList ? existingList : []);
     const [status, setStatus] = useState(null);
 
     useEffect(() => {
-        const existingList = JSON.parse(localStorage.getItem('todos'));
-        setTodosList(existingList ? existingList : []);
-    }, []);
+        localStorage.setItem('todos', JSON.stringify(todosList));
+    }, [todosList]);
 
     const addItemHandler = (title) => {
         if (!title) {
             return;
         }
-        
+
         setTodosList(prevState =>
             [...prevState, {
                 id: Math.random().toString(36).substr(2, 9),
