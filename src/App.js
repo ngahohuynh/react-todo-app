@@ -18,6 +18,18 @@ function App() {
     });
   };
 
+  const editTodo = (id, newTitle) => {
+    setTodosList(prevState => {
+      let newList = [...prevState];
+      const index = prevState.findIndex(item => item.id === id);
+      newList[index] = {
+        ...newList[index],
+        title: newTitle
+      };
+      return newList;
+    });
+  };
+
   const removeTodo = (id) => {
     setTodosList(prevState => prevState.filter(item => item.id !== id));
   };
@@ -47,6 +59,7 @@ function App() {
         <AddTodo onAddTodo={addTodo} />
         <TodosList
           items={todosList}
+          onEditItem={editTodo}
           onRemoveItem={removeTodo}
           onRemoveCompleted={removeCompleted}
           onToggleStatus={toggleStatus}

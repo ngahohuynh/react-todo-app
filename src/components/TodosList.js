@@ -20,6 +20,10 @@ const TodosList = (props) => {
         setStatusToFilter(true);
     };
 
+    const editItem = (id, newTitle) => {
+        props.onEditItem(id, newTitle);
+    };
+
     const removeCompleted = () => {
         props.onRemoveCompleted();
     };
@@ -43,6 +47,7 @@ const TodosList = (props) => {
                         title={item.title}
                         completed={item.completed}
                         toggleStatus={toggleCompleted}
+                        editItem={editItem}
                         removeItem={removeItem}
                     />
                 ))}
