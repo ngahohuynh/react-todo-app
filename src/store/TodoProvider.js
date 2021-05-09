@@ -1,31 +1,8 @@
 import { useState } from 'react';
 import TodoContext from './todo-context'
 
-const initialList = [
-    {
-        id: 't1',
-        title: 'Code',
-        completed: true
-    },
-    {
-        id: 't2',
-        title: 'Exercise',
-        completed: false
-    },
-    {
-        id: 't3',
-        title: 'Meditate',
-        completed: false
-    },
-    {
-        id: 't4',
-        title: 'Read for 1 hour',
-        completed: true
-    }
-];
-
 const TodoProvider = (props) => {
-    const [todosList, setTodosList] = useState(initialList);
+    const [todosList, setTodosList] = useState([]);
     const [status, setStatus] = useState(null);
 
     const addItemHandler = (title) => {

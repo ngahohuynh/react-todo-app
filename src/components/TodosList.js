@@ -1,9 +1,13 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import TodoContext from "../store/todo-context";
 import TodoItem from "./TodoItem";
 
 const TodosList = () => {
     const todoCtx = useContext(TodoContext);
+
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todoCtx.items));
+    }, [todoCtx.items]);
 
     const getAll = () => {
         todoCtx.filterByStatus();
