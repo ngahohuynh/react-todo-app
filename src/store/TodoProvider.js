@@ -29,6 +29,10 @@ const TodoProvider = (props) => {
     const [status, setStatus] = useState(null);
 
     const addItemHandler = (title) => {
+        if (!title) {
+            return;
+        }
+        
         setTodosList(prevState =>
             [...prevState, {
                 id: Math.random().toString(36).substr(2, 9),
