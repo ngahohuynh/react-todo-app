@@ -1,12 +1,14 @@
 import { createContext } from "react";
 
-const todoContext = createContext({
+const TodoContext = createContext({
     items: [],
-    addItem: (item) => {},
-    editItem: (id, newItem) => {},
+    statusToFilter: null,
+    addItem: (title) => {},
+    editTitle: (id, newTitle) => {},
     removeItem: (id) => {},
-    markAsDone: (id) => {},
-    filterByStatus: (completed) => {}
+    toggleStatus: (id) => {},
+    filterByStatus: (completed) => {},
+    removeCompleted: () => {}
 });
 
-export default todoContext;
+export default TodoContext;

@@ -1,28 +1,32 @@
-import { useRef } from "react";
+import { useContext } from "react";
+import TodoContext from "../store/todo-context";
 
 const TodoItem = (props) => {
-    const cbTodo = useRef();
+    const todoCtx = useContext(TodoContext);
 
     const itemClasses = `card ${props.completed ? 'checked' : ''}`;
 
-    const onToggle = () => {
-        props.toggleStatus(props.id);
+    const onToggleStatus = () => {
+        todoCtx.toggleStatus(props.id);
+    };
+
+    const onRemove = () => {
+        todoCtx.removeItem(props.id);
     };
 
     return (
         <li className={itemClasses}>
             <div className="cb-container">
                 <input 
-                    ref={cbTodo} 
                     className="cb-input" 
                     type="checkbox" 
                     defaultChecked={props.completed} 
-                    onClick={onToggle} 
+                    onClick={onToggleStatus} 
                 />
                 <span className="check"></span>
             </div>
             <p className="item">{props.title}</p>
-            <button className="clear">Remove</button>
+            <button className="clear" onClick={onRemove}>Remove</button>
         </li>
     );
 };

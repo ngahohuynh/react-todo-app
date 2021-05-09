@@ -1,10 +1,12 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+import TodoContext from "../store/todo-context";
 
-const AddTodo = (props) => {
+const AddTodo = () => {
+    const todoCtx = useContext(TodoContext);
     const inputRef = useRef();
 
     const addTodo = () => {
-        props.onAddTodo(inputRef.current.value);
+        todoCtx.addItem(inputRef.current.value);
         inputRef.current.value = '';
     };
 

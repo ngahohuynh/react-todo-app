@@ -1,35 +1,53 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
+import TodoContext from "../store/todo-context";
 import TodoItem from "./TodoItem";
 
-const TodosList = (props) => {
-    const toggleTodoCompleted = (id) => {
-        const todo = props.todosList.find(item => item.id === id);
-        console.log(todo);
-        todo.completed = !todo.completed;
-    }
+const TodosList = () => {
+    const todoCtx = useContext(TodoContext);
+
+    const getAll = () => {
+        todoCtx.filterByStatus();
+    };
+
+    const getActiveTodos = () => {
+        todoCtx.filterByStatus(false);
+    };
+
+    const getCompletedTodos = () => {
+        todoCtx.filterByStatus(true);
+    };
+
+    const removeCompleted = () => {
+        todoCtx.removeCompleted();
+    };
+
+    const statusToFilter = todoCtx.statusToFilter;
+    const shownList = typeof statusToFilter === "boolean" ? 
+        todoCtx.items.filter(item => item.completed === statusToFilter) : 
+        todoCtx.items;
+    const itemsLeft = todoCtx.items.filter(item => item.completed === false).length;
 
     return (
         <Fragment>
             <ul className="todos">
-                {props.todosList.map(item => (
+                {shownList.map(item => (
                     <TodoItem 
                         key={item.id}
                         id={item.id}
                         title={item.title}
                         completed={item.completed}
-                        toggleStatus={toggleTodoCompleted}
                     />
                 ))}
             </ul>
             <div className="card stat">
-                <p className="corner"><span id="items-left">0</span> items left</p>
+                <p className="corner"><span id="items-left">{itemsLeft}</span> items left</p>
                 <div className="filter">
-                    <button id="all" className="on">All</button>
-                    <button id="active">Active</button>
-                    <button id="completed">Completed</button>
+                    <button id="all" className={`${typeof statusToFilter !== "boolean" ? 'on' : ''}`} onClick={getAll}>All</button>
+                    <button id="active" className={`${statusToFilter === false ? 'on' : ''}`} onClick={getActiveTodos}>Active</button>
+                    <button id="completed" className={`${statusToFilter === true ? 'on' : ''}`} onClick={getCompletedTodos}>Completed</button>
                 </div>
                 <div className="corner">
-                    <button id="clear-completed">Remove Completed</button>
+                    <button id="clear-completed" onClick={removeCompleted}>Remove Completed</button>
                 </div>
             </div>
         </Fragment>
