@@ -5,6 +5,7 @@ const TodosList = (props) => {
     const [statusToFilter, setStatusToFilter] = useState();
 
     const toggleCompleted = (id) => {
+        props.onToggleStatus(id);
     }
 
     const getAll = () => {
@@ -20,7 +21,12 @@ const TodosList = (props) => {
     };
 
     const removeCompleted = () => {
+        props.onRemoveCompleted();
     };
+
+    const removeItem = (id) => {
+        props.onRemoveItem(id);
+    }
 
     const shownList = typeof statusToFilter === "boolean" ? 
         props.items.filter(item => item.completed === statusToFilter) : 
@@ -37,6 +43,7 @@ const TodosList = (props) => {
                         title={item.title}
                         completed={item.completed}
                         toggleStatus={toggleCompleted}
+                        removeItem={removeItem}
                     />
                 ))}
             </ul>
@@ -48,7 +55,7 @@ const TodosList = (props) => {
                     <button id="completed" className={`${statusToFilter === true ? 'on' : ''}`} onClick={getCompletedTodos}>Completed</button>
                 </div>
                 <div className="corner">
-                    <button id="clear-completed">Remove Completed</button>
+                    <button id="clear-completed" onClick={removeCompleted}>Remove Completed</button>
                 </div>
             </div>
         </Fragment>

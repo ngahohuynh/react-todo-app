@@ -1,32 +1,15 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import AddTodo from './components/AddTodo';
 import TodosList from './components/TodosList';
 
-const TODOS_DATA = [
-  {
-    id: 't1',
-    title: 'Code',
-    completed: true
-  },
-  {
-    id: 't2',
-    title: 'Exercise',
-    completed: false
-  },
-  {
-    id: 't3',
-    title: 'Meditate',
-    completed: false
-  },
-  {
-    id: 't4',
-    title: 'Read for 1 hour',
-    completed: true
-  }
-];
-
 function App() {
-  const [todosList, setTodosList] = useState(TODOS_DATA);
+  const existingList = JSON.parse(localStorage.getItem('todos'));
+
+  const [todosList, setTodosList] = useState(existingList ? existingList : []);
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todosList));
+  }, [todosList]);
 
   const addTodo = (title) => {
     if (!title) { return; }
@@ -38,6 +21,22 @@ function App() {
   const removeTodo = (id) => {
     setTodosList(prevState => prevState.filter(item => item.id !== id));
   };
+  
+  const toggleStatus = (id) => {
+    setTodosList(prevState => {
+      let newList = [...prevState];
+      const index = prevState.findIndex(item => item.id === id);
+      newList[index] = {
+        ...newList[index],
+        completed: !newList[index].completed
+      };
+      return newList;
+    });
+  };
+  
+  const removeCompleted = () => {
+    setTodosList(prevState => prevState.filter(item => item.completed === false));
+  };
 
   return (
     <Fragment>
@@ -46,9 +45,11 @@ function App() {
       </header>
       <main>
         <AddTodo onAddTodo={addTodo} />
-        <TodosList 
-          items={todosList} 
-          onRemoveItem={removeTodo} 
+        <TodosList
+          items={todosList}
+          onRemoveItem={removeTodo}
+          onRemoveCompleted={removeCompleted}
+          onToggleStatus={toggleStatus}
         />
       </main>
     </Fragment>
