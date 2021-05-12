@@ -1,7 +1,8 @@
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import AddTodo from './components/AddTodo';
 import TodosList from './components/TodosList';
-import store from './store';
+import store, { persistor } from './store';
 
 function App() {
   // const existingList = JSON.parse(localStorage.getItem('todos'));
@@ -14,13 +15,15 @@ function App() {
 
   return (
     <Provider store={store}>
-      <header className="card">
-        <h1>TODO</h1>
-      </header>
-      <main>
-        <AddTodo />
-        <TodosList />
-      </main>
+      <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
+        <header className="card">
+          <h1>TODO</h1>
+        </header>
+        <main>
+          <AddTodo />
+          <TodosList />
+        </main>
+      </PersistGate>
     </Provider>
   );
 }
