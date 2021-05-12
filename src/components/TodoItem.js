@@ -1,18 +1,27 @@
 import { Fragment, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const TodoItem = (props) => {
     const [edittable, setEdittable] = useState(false);
     const cbTodo = useRef();
     const editTodoInput = useRef();
 
+    const dispatch = useDispatch();
+
     const itemClasses = `card ${props.completed ? 'checked' : ''}`;
 
     const onToggleStatus = () => {
-        props.toggleStatus(props.id);
+        dispatch({
+            type: 'TOGGLE_STATUS',
+            id: props.id
+        });
     };
 
     const onRemove = () => {
-        props.removeItem(props.id);
+        dispatch({
+            type: 'REMOVE',
+            id: props.id
+        });
     };
 
     const enableEdit = () => {
@@ -20,7 +29,11 @@ const TodoItem = (props) => {
     };
 
     const onEdit = () => {
-        props.editItem(props.id, editTodoInput.current.value);
+        dispatch({
+            type: 'EDIT',
+            id: props.id,
+            title: editTodoInput.current.value
+        });
         setEdittable(false);
     };
 

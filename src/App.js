@@ -1,71 +1,27 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
 import AddTodo from './components/AddTodo';
 import TodosList from './components/TodosList';
+import store from './store';
 
 function App() {
-  const existingList = JSON.parse(localStorage.getItem('todos'));
+  // const existingList = JSON.parse(localStorage.getItem('todos'));
 
-  const [todosList, setTodosList] = useState(existingList ? existingList : []);
+  // const [todosList, setTodosList] = useState(existingList ? existingList : []);
 
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todosList));
-  }, [todosList]);
-
-  const addTodo = (title) => {
-    if (!title) { return; }
-    setTodosList(prevList => {
-      return [...prevList, { id: Math.random().toString(36).substr(2, 9), title: title, completed: false }];
-    });
-  };
-
-  const editTodo = (id, newTitle) => {
-    setTodosList(prevState => {
-      let newList = [...prevState];
-      const index = prevState.findIndex(item => item.id === id);
-      newList[index] = {
-        ...newList[index],
-        title: newTitle
-      };
-      return newList;
-    });
-  };
-
-  const removeTodo = (id) => {
-    setTodosList(prevState => prevState.filter(item => item.id !== id));
-  };
-  
-  const toggleStatus = (id) => {
-    setTodosList(prevState => {
-      let newList = [...prevState];
-      const index = prevState.findIndex(item => item.id === id);
-      newList[index] = {
-        ...newList[index],
-        completed: !newList[index].completed
-      };
-      return newList;
-    });
-  };
-  
-  const removeCompleted = () => {
-    setTodosList(prevState => prevState.filter(item => item.completed === false));
-  };
+  // useEffect(() => {
+  //   localStorage.setItem('todos', JSON.stringify(todosList));
+  // }, [todosList]);
 
   return (
-    <Fragment>
+    <Provider store={store}>
       <header className="card">
         <h1>TODO</h1>
       </header>
       <main>
-        <AddTodo onAddTodo={addTodo} />
-        <TodosList
-          items={todosList}
-          onEditItem={editTodo}
-          onRemoveItem={removeTodo}
-          onRemoveCompleted={removeCompleted}
-          onToggleStatus={toggleStatus}
-        />
+        <AddTodo />
+        <TodosList />
       </main>
-    </Fragment>
+    </Provider>
   );
 }
 

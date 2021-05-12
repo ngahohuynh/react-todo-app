@@ -1,12 +1,22 @@
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
 
-const AddTodo = (props) => {
+const AddTodo = () => {
+    const dispatch = useDispatch();
+
     const inputRef = useRef();
 
     const addTodo = (event) => {
         event.preventDefault();
 
-        props.onAddTodo(inputRef.current.value);
+        if (!inputRef.current.value) {
+            return;
+        }
+
+        dispatch({
+            type: 'ADD',
+            title: inputRef.current.value
+        });
         inputRef.current.value = '';
     };
 

@@ -1,54 +1,51 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TodoItem from "./TodoItem";
 
-const TodosList = (props) => {
-    const [statusToFilter, setStatusToFilter] = useState();
-
-    const toggleCompleted = (id) => {
-        props.onToggleStatus(id);
-    }
+const TodosList = () => {
+    const dispatch = useDispatch();
+    const todosList = useSelector(state => state.todos);
+    const statusToFilter = useSelector(state => state.statusToFilter);
 
     const getAll = () => {
-        setStatusToFilter();
+        dispatch({
+            type: 'FILTER_STATUS',
+            status: null
+        });
     };
 
     const getActiveTodos = () => {
-        setStatusToFilter(false);
+        dispatch({
+            type: 'FILTER_STATUS',
+            status: false
+        });
     };
 
     const getCompletedTodos = () => {
-        setStatusToFilter(true);
-    };
-
-    const editItem = (id, newTitle) => {
-        props.onEditItem(id, newTitle);
+        dispatch({
+            type: 'FILTER_STATUS',
+            status: true
+        });
     };
 
     const removeCompleted = () => {
-        props.onRemoveCompleted();
+        dispatch({ type: 'REMOVE_COMPLETED' });
     };
 
-    const removeItem = (id) => {
-        props.onRemoveItem(id);
-    }
-
-    const shownList = typeof statusToFilter === "boolean" ? 
-        props.items.filter(item => item.completed === statusToFilter) : 
-        props.items;
-    const itemsLeft = props.items.filter(item => item.completed === false).length;
+    const shownList = typeof statusToFilter === "boolean" ?
+        todosList.filter(item => item.completed === statusToFilter) :
+        todosList
+    const itemsLeft = todosList.filter(item => item.completed === false).length;
 
     return (
         <Fragment>
             <ul className="todos">
                 {shownList.map(item => (
-                    <TodoItem 
+                    <TodoItem
                         key={item.id}
                         id={item.id}
                         title={item.title}
                         completed={item.completed}
-                        toggleStatus={toggleCompleted}
-                        editItem={editItem}
-                        removeItem={removeItem}
                     />
                 ))}
             </ul>

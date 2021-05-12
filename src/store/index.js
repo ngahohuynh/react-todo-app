@@ -22,7 +22,7 @@ const todoReducer = (state = initialState, action) => {
             const index = state.todos.findIndex(item => item.id === action.id);
             updatedList[index] = {
                 ...updatedList[index],
-                title: action.newTitle
+                title: action.title
             };
             return {
                 todos: updatedList,
@@ -53,15 +53,9 @@ const todoReducer = (state = initialState, action) => {
                 statusToFilter: state.statusToFilter
             };
 
-        case 'FILTER_NONE':
-            return {
-                todos: state.todos,
-                statusToFilter: null
-            };
-
         case 'FILTER_STATUS':
             return {
-                todos: state.todos.filter(item => item.completed === action.status),
+                todos: state.todos,
                 statusToFilter: action.status
             };
 
