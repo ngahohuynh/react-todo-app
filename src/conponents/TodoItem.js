@@ -1,5 +1,6 @@
 import { Fragment, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { editTodoAction } from "../store/actions/todoItemActions";
 
 const TodoItem = (props) => {
     const [edittable, setEdittable] = useState(false);
@@ -29,11 +30,7 @@ const TodoItem = (props) => {
     };
 
     const onEdit = () => {
-        dispatch({
-            type: 'EDIT',
-            id: props.id,
-            title: editTodoInput.current.value
-        });
+        dispatch(editTodoAction( props.id, editTodoInput.current.value));
         setEdittable(false);
     };
 

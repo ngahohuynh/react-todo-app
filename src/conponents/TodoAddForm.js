@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 
-const AddTodo = () => {
+const TodoAddForm = () => {
     const dispatch = useDispatch();
 
     const inputRef = useRef();
@@ -43,4 +43,4 @@ const AddTodo = () => {
     );
 };
 
-export default AddTodo;
+export default TodoAddForm;
