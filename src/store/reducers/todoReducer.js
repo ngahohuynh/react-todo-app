@@ -1,66 +1,42 @@
 import { todoActionTypes } from "../actionTypes/todoActionTypes";
 
-const initialState = {
-  todos: [],
-  statusToFilter: null,
-};
+const initialState = [];
 
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
     case todoActionTypes.add:
-      return {
-        todos: [
-          ...state.todos,
+      return [
+          ...state,
           {
             id: Math.random().toString(36).substr(2, 9),
             title: action.title,
             completed: false,
           },
-        ],
-        statusToFilter: state.statusToFilter,
-      };
+        ];
 
     case todoActionTypes.edit:
-      let updatedList = [...state.todos];
-      const index = state.todos.findIndex((item) => item.id === action.id);
+      let updatedList = [...state];
+      const index = state.findIndex((item) => item.id === action.id);
       updatedList[index] = {
         ...updatedList[index],
         title: action.title,
       };
-      return {
-        todos: updatedList,
-        statusToFilter: state.statusToFilter,
-      };
+      return updatedList;
 
     case todoActionTypes.remove:
-      return {
-        todos: state.todos.filter((item) => item.id !== action.id),
-        statusToFilter: state.statusToFilter,
-      };
+      return state.filter((item) => item.id !== action.id);
 
     case todoActionTypes.toggleStatus:
-      let newList = [...state.todos];
-      const foundIndex = state.todos.findIndex((item) => item.id === action.id);
+      let newList = [...state];
+      const foundIndex = state.findIndex((item) => item.id === action.id);
       newList[foundIndex] = {
         ...newList[foundIndex],
         completed: !newList[foundIndex].completed,
       };
-      return {
-        todos: newList,
-        statusToFilter: state.statusToFilter,
-      };
+      return newList;
 
     case todoActionTypes.removeCompleted:
-      return {
-        todos: state.todos.filter((item) => item.completed === false),
-        statusToFilter: state.statusToFilter,
-      };
-
-    case todoActionTypes.filterStatus:
-      return {
-        todos: state.todos,
-        statusToFilter: action.status,
-      };
+      return state.filter((item) => item.completed === false);
 
     default:
       return state;

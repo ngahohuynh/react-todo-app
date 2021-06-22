@@ -1,19 +1,20 @@
 import { useDispatch } from "react-redux";
+import filterActions from "../store/actions/filterActions";
 import todoItemActions from "../store/actions/todoItemActions";
 
 const TodoStat = ({ todosList, statusToFilter }) => {
   const dispatch = useDispatch();
 
   const getAll = () => {
-    dispatch(todoItemActions.filterStatusTodoAction(null));
+    dispatch(filterActions.filterStatusAction(null));
   };
 
   const getActiveTodos = () => {
-    dispatch(todoItemActions.filterStatusTodoAction(false));
+    dispatch(filterActions.filterStatusAction(false));
   };
 
   const getCompletedTodos = () => {
-    dispatch(todoItemActions.filterStatusTodoAction(true));
+    dispatch(filterActions.filterStatusAction(true));
   };
 
   const removeCompleted = () => {

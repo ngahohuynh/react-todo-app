@@ -5,7 +5,7 @@ import TodoStat from "./TodoStat";
 
 const TodosList = () => {
   const todosList = useSelector((state) => state.todos);
-  const statusToFilter = useSelector((state) => state.statusToFilter);
+  const statusToFilter = useSelector((state) => state.filter);
 
   const shownList =
     typeof statusToFilter === "boolean"

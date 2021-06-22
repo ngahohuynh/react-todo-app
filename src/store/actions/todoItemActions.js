@@ -35,20 +35,12 @@ const removeCompletedTodoAction = () => {
   };
 };
 
-const filterStatusTodoAction = (status) => {
-  return {
-    type: todoActionTypes.filterStatus,
-    status,
-  };
-};
-
 const todoItemActions = {
   addTodoAction,
   editTodoAction,
   removeTodoAction,
   toggleStatusTodoAction,
   removeCompletedTodoAction,
-  filterStatusTodoAction,
 };
 
 export default todoItemActions;
