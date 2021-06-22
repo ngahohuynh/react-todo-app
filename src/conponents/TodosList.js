@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { todoActionTypes } from "../store/actionTypes/todoActionTypes";
 import TodoItem from "./TodoItem";
 
 const TodosList = () => {
@@ -9,27 +10,27 @@ const TodosList = () => {
 
   const getAll = () => {
     dispatch({
-      type: "FILTER_STATUS",
+      type: todoActionTypes.filterStatus,
       status: null,
     });
   };
 
   const getActiveTodos = () => {
     dispatch({
-      type: "FILTER_STATUS",
+      type: todoActionTypes.filterStatus,
       status: false,
     });
   };
 
   const getCompletedTodos = () => {
     dispatch({
-      type: "FILTER_STATUS",
+      type: todoActionTypes.filterStatus,
       status: true,
     });
   };
 
   const removeCompleted = () => {
-    dispatch({ type: "REMOVE_COMPLETED" });
+    dispatch({ type: todoActionTypes.removeCompleted });
   };
 
   const shownList =

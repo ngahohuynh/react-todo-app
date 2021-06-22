@@ -1,6 +1,7 @@
 import { Fragment, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { editTodoAction } from "../store/actions/todoItemActions";
+import { todoActionTypes } from "../store/actionTypes/todoActionTypes";
 
 const TodoItem = (props) => {
   const [edittable, setEdittable] = useState(false);
@@ -13,14 +14,14 @@ const TodoItem = (props) => {
 
   const onToggleStatus = () => {
     dispatch({
-      type: "TOGGLE_STATUS",
+      type: todoActionTypes.toggleStatus,
       id: props.id,
     });
   };
 
   const onRemove = () => {
     dispatch({
-      type: "REMOVE",
+      type: todoActionTypes.remove,
       id: props.id,
     });
   };

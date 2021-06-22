@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { todoActionTypes } from "../store/actionTypes/todoActionTypes";
 
 const TodoAddForm = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const TodoAddForm = () => {
     }
 
     dispatch({
-      type: "ADD",
+      type: todoActionTypes.add,
       title: inputRef.current.value,
     });
     inputRef.current.value = "";
