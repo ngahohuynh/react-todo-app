@@ -1,7 +1,6 @@
 import { Fragment, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { editTodoAction } from "../store/actions/todoItemActions";
-import { todoActionTypes } from "../store/actionTypes/todoActionTypes";
+import todoItemActions from "../store/actions/todoItemActions";
 
 const TodoItem = (props) => {
   const [edittable, setEdittable] = useState(false);
@@ -13,17 +12,11 @@ const TodoItem = (props) => {
   const itemClasses = `card ${props.completed ? "checked" : ""}`;
 
   const onToggleStatus = () => {
-    dispatch({
-      type: todoActionTypes.toggleStatus,
-      id: props.id,
-    });
+    dispatch(todoItemActions.toggleStatusTodoAction(props.id));
   };
 
   const onRemove = () => {
-    dispatch({
-      type: todoActionTypes.remove,
-      id: props.id,
-    });
+    dispatch(todoItemActions.removeTodoAction(props.id));
   };
 
   const enableEdit = () => {
@@ -31,7 +24,7 @@ const TodoItem = (props) => {
   };
 
   const onEdit = () => {
-    dispatch(editTodoAction(props.id, editTodoInput.current.value));
+    dispatch(todoItemActions.editTodoAction(props.id, editTodoInput.current.value));
     setEdittable(false);
   };
 
