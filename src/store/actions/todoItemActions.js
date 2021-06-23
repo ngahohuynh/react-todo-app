@@ -7,6 +7,13 @@ const addTodoAction = (title) => {
   };
 };
 
+const addTodoActionTest = (title) => {
+  return (dispatch) => {
+    dispatch(addTodoAction(title));
+    console.log('Test Thunk Middleware');
+  };
+};
+
 const editTodoAction = (id, title) => {
   return {
     type: todoActionTypes.edit,
@@ -37,6 +44,7 @@ const removeCompletedTodoAction = () => {
 
 const todoItemActions = {
   addTodoAction,
+  addTodoActionTest,
   editTodoAction,
   removeTodoAction,
   toggleStatusTodoAction,

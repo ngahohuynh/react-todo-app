@@ -16,7 +16,7 @@ const TodoAddForm = () => {
       return;
     }
 
-    dispatch(todoItemActions.addTodoAction(title));
+    dispatch(todoItemActions.addTodoActionTest(title));
     inputRef.current.value = "";
   };
 
